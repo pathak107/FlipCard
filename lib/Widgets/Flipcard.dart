@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flipcart/Widgets/BlankCard.dart';
+import 'package:flipcart/Widgets/FrontCard.dart';
 import 'package:flutter/material.dart';
 
 class FlipCard extends StatefulWidget {
@@ -55,7 +57,10 @@ class _FlipCardState extends State<FlipCard>
                     //Creating delay and then fippinig back
                     if(widget.isMatching!=true){
                       Future.delayed(const Duration(milliseconds: 1000), () {
-                      _animationController.reverse();
+                        if(widget.isMatching==false){  //flip the card only if it hasn't matched
+                          _animationController.reverse();
+                        }
+                      
                     });
                     }
                     
@@ -70,36 +75,10 @@ class _FlipCardState extends State<FlipCard>
                   ? Container(
                       child: Image.asset('./assets/images/card.png'),
                     )
-                  : Stack(
-                      children: <Widget>[
-                        Container(
-                          child: Image.asset('./assets/images/cardFront.png'),
-                        ),
-                        Transform(
-                          alignment: FractionalOffset.center,
-                          transform: Matrix4.identity()
-                            ..setEntry(3, 2, 0.002)
-                            ..rotateY(pi * 1),
-                          child: Center(child: Text(widget.cardValue)),
-                        ),
-                      ],
-                    ),
+                  : FrontCard(cardValue: widget.cardValue,),
         ),
       ),
     );
   }
 }
 
-
-
-//Blank Card
-class BlankCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      width: 55,
-      height: 100,
-    );
-  }
-}

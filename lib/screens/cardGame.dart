@@ -1,4 +1,5 @@
 import 'package:flipcart/Widgets/Flipcard.dart';
+import 'package:flipcart/Widgets/cardMatchStatus.dart';
 import 'package:flutter/material.dart';
 
 class CardGame extends StatefulWidget {
@@ -31,7 +32,7 @@ class _CardGameState extends State<CardGame> {
   //config variables
   int cardsRevealed = 0; //will be from 0 to 2
   int cardsMatched = 0;
-  String matchStatus = "";
+  bool matchStatus = false;
   int indexOfFirstCard = -1;
   int indexOfSecondCard = -1;
   bool istryingToMatchCards = false;
@@ -61,7 +62,7 @@ class _CardGameState extends State<CardGame> {
 
     if (cardsRevealed < 2) {
       //do nothing
-    } else if (cardsRevealed == 2) {
+    } else if (cardsRevealed == 2 && indexOfFirstCard != indexOfSecondCard) {
       _matchCards(indexOfFirstCard, indexOfSecondCard);
     }
   }
@@ -71,47 +72,44 @@ class _CardGameState extends State<CardGame> {
     //introduce delay and disable all cards for some time
     istryingToMatchCards = true;
     Future.delayed(const Duration(milliseconds: 1500), () {
-      setState(() {
-        istryingToMatchCards = false; //After 1.5s enable the cards once again
-      });
+      print(index1);
+      print(index2);
+      if (newCards[index1]["card"] == newCards[index2]["card"] &&
+          index1 != index2) {
+        print("cards matched");
+        setState(() {
+          cardsMatched += 2;
+          newCards[index1]['matched'] = true;
+          newCards[index2]['matched'] = true;
+          matchStatus = true;
+          istryingToMatchCards = false; //After 1.5s enable the cards once again
+        });
+      } else {
+        print("cards don't match");
+        setState(() {
+          matchStatus = false;
+          istryingToMatchCards = false; //After 1.5s enable the cards once again
+        });
+      }
     });
-    print(index1);
-    print(index2);
-    if (newCards[index1]["card"] == newCards[index2]["card"] &&
-        index1 != index2) {
-      print("cards matched");
-      setState(() {
-        cardsMatched += 2;
-        newCards[index1]['matched'] = true;
-        newCards[index2]['matched'] = true;
-        matchStatus = "Matched! ";
-      });
-    } else {
-      print("cards don't match");
-      setState(() {
-        matchStatus = "Cards don't match";
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flip Card Game'),
-      ),
       body: SafeArea(
         child: Container(
           //to set background image
           // constraints: BoxConstraints.expand(),
-          // decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //         image: AssetImage('./assets/images/bg.png'),
-          //         fit: BoxFit.cover)),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('./assets/images/bg.png'),
+                  fit: BoxFit.cover)),
 
           child: AbsorbPointer(
             absorbing: istryingToMatchCards,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Center(
                   child: GridView.count(
@@ -130,8 +128,10 @@ class _CardGameState extends State<CardGame> {
                     }),
                   ),
                 ),
-                Text(cardsMatched.toString()),
-                Text(matchStatus)
+
+                //Render Match status widget
+                //Using animations when value changes
+                MatchStatus(matchStatus: matchStatus), //passing matchStatus of this widget to child widget
               ],
             ),
           ),

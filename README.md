@@ -1,4 +1,4 @@
-# flipcart
+# flipcard
 
 A new Flutter project.
 
