@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class FrontCard extends StatelessWidget {
   final String cardValue;
@@ -17,42 +18,42 @@ class FrontCard extends StatelessWidget {
       case "s1":
         cardColor = Colors.black;
         cardText = "1";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_spade,color: Colors.black,);
         break;
       case "sA":
         cardColor = Colors.black;
         cardText = "A";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_spade,color: Colors.black,);
         break;
       case "c1":
         cardColor = Colors.black;
         cardText = "1";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_club,color: Colors.black,);
         break;
       case "cA":
         cardColor = Colors.black;
         cardText = "A";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_club,color: Colors.black,);
         break;
       case "h1":
         cardColor = Colors.red;
         cardText = "1";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_heart,color: Colors.red,);
         break;
       case "hA":
         cardColor = Colors.red;
         cardText = "A";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_heart,color: Colors.red,);
         break;
       case "d1":
         cardColor = Colors.red;
         cardText = "1";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_diamond,color: Colors.red,);
         break;
       case "dA":
         cardColor = Colors.red;
         cardText = "A";
-        cardIcon = Icon(Icons.favorite,color: cardColor,);
+        cardIcon = Icon(MaterialCommunityIcons.cards_diamond,color: Colors.red,);
         break;
     }
 
